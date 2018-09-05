@@ -39,7 +39,7 @@ def query_nautilus(request, endpoint):
     url = base_url + endpoint_url + params
     return query_json_endpoint(url)
 
-
+@app_bp.route("/")
 @app_bp.route("/index")
 def index():
     return render_template("main/index.html")
