@@ -1,8 +1,6 @@
-import base64
 import json
 import sys
 
-import pprint
 from flask import render_template, request, current_app
 from urllib.request import build_opener
 
@@ -37,19 +35,23 @@ def query_nautilus(request, endpoint):
     if len(request.args) > 0:
         params = "?" + "&".join(["%s=%s" % (k, v) for k, v in request.args.items()])
     url = base_url + endpoint_url + params
-    return query_json_endpoint(url)
+    return url, query_json_endpoint(url)
+
+
+"""
+    ROUTES
+"""
+
 
 @app_bp.route("/")
-@app_bp.route("/index")
 def index():
     return render_template("main/index.html")
 
 
-@app_bp.route("/collection")
-def collection():
-    col = query_nautilus(request, "collection")
-    pprint.pprint(col)
-    return render_template("main/collection.html", collection=col)
+@app_bp.route("/collections")
+def collections():
+    api_url, collection = query_nautilus(request, "collections")
+    return render_template("main/collection.html", collection=collection, api_url=api_url)
 
 
 @app_bp.route("/navigation")

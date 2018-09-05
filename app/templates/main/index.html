@@ -1,19 +1,58 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-
-    <section class="section">
-        <div class="container is-fluid">
-            <div class="columns">
-                <div class="column is-half is-offset-one-quarter">
-                    <div class="content">
-                        <h1>Bienvenue</h1>
-                        <p>Aenean euismod risus turpis, at commodo neque dictum eget. Nullam pretium suscipit sagittis. Proin ac consectetur metus, quis ultrices nisl. Morbi a laoreet sem. Pellentesque interdum libero diam, facilisis pulvinar mi aliquam at. Nullam accumsan tortor ex, ac dictum velit aliquam non. Sed scelerisque odio eu purus accumsan tincidunt. Curabitur facilisis turpis ex, a rhoncus nunc faucibus vitae. Nam id diam id magna dictum molestie eget eu est. Nulla ac sapien auctor, sodales tortor in, vulputate urna. Curabitur ut ultrices augue. Praesent ultrices commodo rhoncus. Nullam ullamcorper nibh a congue imperdiet. Sed ultricies ligula posuere nibh egestas, et ultricies magna dignissim.</p>
-                        <p>Quisque dignissim metus sed ante sollicitudin mollis vel vitae ligula. Fusce bibendum felis justo, vitae suscipit dolor vestibulum eget. In quam quam, dictum vel dolor non, tempor ullamcorper augue. Vivamus scelerisque posuere eros nec dignissim. Aliquam vulputate tincidunt erat ut malesuada. Quisque posuere, lorem in elementum convallis, diam tortor facilisis lacus, non tempus leo ante in diam. Proin non ex mi. Duis lacinia, eros at condimentum tincidunt, risus eros porttitor mi, vel fringilla diam tortor sit amet ipsum. Nulla commodo quam cursus justo gravida porttitor. Aenean vitae sem nec risus semper fringilla ac non dui. Curabitur aliquet pulvinar nisi non euismod. Aliquam bibendum tristique massa, luctus placerat leo condimentum faucibus. Aliquam lorem odio, rutrum vitae molestie eu, interdum eu massa.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+<section class="section">
+   <div class="container is-fluid">
+      <div class="content">
+         <h1>Welcome to the Distributed Text Services (DTS) demonstration application</h1>
+         <p>Official documentation is available at:
+            <a href="https://distributed-text-services.github.io/">https://distributed-text-services.github.io/</a>
+         </p>
+         <p>
+            This website directly exposes DTS endpoints served by instance of <a href="https://github.com/Capitains/Nautilus">Nautilus</a>.
+         <ul>
+            <li>The <a href="https://distributed-text-services.github.io/Collection-Endpoint.html">Collection Endpoint</a> is used to navigate the text collection contents</li>
+            <li>The <a href="https://distributed-text-services.github.io/Navigation-Endpoint.html">Navigation Endpoint</a> is used to navigate within a single text document</li>
+            <li>The <a href="https://distributed-text-services.github.io/Document-Endpoint.html">Document Endpoint</a> is used to retrieve complete or partial texts</li>
+         </ul>
+         The following data sample is exposed through a <a href="http://cite-architecture.github.io/cts/">CTS</a> compliant implementation: <a href="https://github.com/Capitains/MyCapytain">MyCapytain</a>.
+         <p>
+         </p>
+         <div id="card" class="card" style="margin-top: 40px;"> </div>
+      </div>
+   </div>
+</section>
 {% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+   function load_card(url) {
+           let xmlhttp = new XMLHttpRequest();
+           xmlhttp.onreadystatechange = function() {
+               if (xmlhttp.readyState === XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
+                   if (xmlhttp.status === 200) {
+                       const data = xmlhttp.responseText;
+                       document.getElementById("card").innerHTML = data;
+
+                       for (let e of document.getElementsByClassName("hidden-nav")) {
+                          e.onclick = function() {
+                               console.log(e.getElementsByTagName("input")[0]);
+                               load_card(e.getElementsByTagName("input")[0].value);
+                          };
+                       }
+                   }
+               }
+           };
+
+           xmlhttp.open("GET", url, true);
+           xmlhttp.send();
+
+   }
+
+   document.addEventListener("DOMContentLoaded", function (event) {
+           let default_url = "{{ url_for('app_bp.collections') }}";
+           load_card(default_url);
+   });
+</script>
+{% endblock %}
+

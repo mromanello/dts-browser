@@ -14,7 +14,7 @@ class Config(object):
     APP_URL_PREFIX = ''
 
     NAUTILUS_URL = 'http://dev.chartes.psl.eu/api/nautilus'
-    NAUTILUS_COLLECTION_ENDPOINT = '/dts/collections'
+    NAUTILUS_COLLECTIONS_ENDPOINT = '/dts/collections'
     NAUTILUS_NAVIGATION_ENDPOINT = '/dts/navigation'
     NAUTILUS_DOCUMENT_ENDPOINT = '/dts/document'
 
