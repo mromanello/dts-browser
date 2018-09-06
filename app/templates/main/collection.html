@@ -20,7 +20,11 @@
                <tr class="hidden-nav">
                   <td>{{ m["@id"] }}</td>
                   <td>
-                     <div><input type="hidden" value="{{ url_for('app_bp.collections') }}?id={{ m["@id"] }}"/>{{ m["title"] }}</div>
+                     {% if m["@type"] == "Collection" %}
+                        <input type="hidden" value="{{ url_for('app_bp.collections') }}?id={{ m["@id"] }}"/>{{ m["title"] }}
+                     {% else %}
+                        <input type="hidden" value="{{ url_for('app_bp.document') }}?id={{ m["@id"] }}"/>{{ m["title"] }}
+                     {% endif %}
                   </td>
                   <td>{{ m["@type"] }}</td>
                   <td>{{ m["totalItems"] }}</td>
@@ -31,3 +35,5 @@
       </div>
    </div>
 </div>
+
+

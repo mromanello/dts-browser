@@ -4,12 +4,12 @@
 <section class="section">
    <div class="container is-fluid">
       <div class="content">
-         <h1>Welcome to the Distributed Text Services (DTS) demonstration application</h1>
+         <h1 style="margin-bottom: 0.5em; font-family: inherit; text-align: inherit">Welcome to the Distributed Text Services (DTS) demonstration application</h1>
          <p>Official documentation is available at:
             <a href="https://distributed-text-services.github.io/">https://distributed-text-services.github.io/</a>
          </p>
          <p>
-            This website directly exposes DTS endpoints served by instance of <a href="https://github.com/Capitains/Nautilus">Nautilus</a>.
+            This website directly exposes DTS endpoints served by an instance of <a href="https://github.com/Capitains/Nautilus">Nautilus</a>.
          <ul>
             <li>The <a href="https://distributed-text-services.github.io/Collection-Endpoint.html">Collection Endpoint</a> is used to navigate the text collection contents</li>
             <li>The <a href="https://distributed-text-services.github.io/Navigation-Endpoint.html">Navigation Endpoint</a> is used to navigate within a single text document</li>
@@ -18,6 +18,7 @@
          The following data sample is exposed through a <a href="http://cite-architecture.github.io/cts/">CTS</a> compliant implementation: <a href="https://github.com/Capitains/MyCapytain">MyCapytain</a>.
          <p>
          </p>
+
          <div id="card" class="card" style="margin-top: 40px;"> </div>
       </div>
    </div>
@@ -39,6 +40,11 @@
                                console.log(e.getElementsByTagName("input")[0]);
                                load_card(e.getElementsByTagName("input")[0].value);
                           };
+                       }
+
+                       const asides = document.getElementsByTagName("aside");
+                       if (asides.length > 0) {
+                           document.getElementById("aside-col").appendChild(asides[0]);
                        }
                    }
                }

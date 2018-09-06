@@ -1,0 +1,97 @@
+
+#aside {
+    width: fit-content;
+    position: inherit;
+    resize: none;
+    padding: 0em 1em 1em 0;
+    border: none;
+
+    margin-top: 3em;
+
+    color : inherit;
+    font-size : 16px;
+    font-family: Georgia, "Bitstream Vera Serif", Times, serif;
+
+}
+
+.reffs {
+    margin-left: 2em;
+}
+.reffs > .col-md-1 {
+    width: auto;
+}
+.reffs > section{
+    margin: 3em 0em 0em 0em;
+}
+
+
+
+#intro-index {
+    margin-top: 3em;
+    padding-right: 4em;
+}
+
+#navigation-header {
+    margin-top: 20px;
+}
+
+#collections {
+    margin-top: 20px;
+}
+
+#menu-container {
+    width: 25%;
+    font-family: Georgia, "Bitstream Vera Serif", Times, serif;
+}
+
+#reading-container {
+    width: 75%;
+    border-left: #C9C6BB 1px solid;
+    height: fit-content;
+}
+
+#center {
+
+}
+
+#article {
+    padding-left: 0em;
+}
+
+#body-1 {
+    padding-top: 0;
+}
+
+#body-1-1 {
+    padding-top: 0;
+}
+
+#main {
+    width: 100%;
+}
+
+article > header {
+    margin: 0em 4em 0em 0em;
+    font-family: Georgia, "Bitstream Vera Serif", Times, serif;
+}
+
+article > header > h1, h2 {
+    font-family: Georgia, "Bitstream Vera Serif", Times, serif;
+}
+
+.fileDesc > .titleStmt {
+
+}
+
+
+#row-2 {
+    margin-top: 30px;
+}
+
+.card-columns {
+    margin-top: 3em;
+}
+
+.tree li.more::before{
+    content: '○';
+}
