@@ -6,19 +6,18 @@
       <div class="content">
          <h1 style="margin-bottom: 0.5em; font-family: inherit; text-align: inherit">Welcome to the Distributed Text Services (DTS) demonstration application</h1>
          <p>Official documentation is available at:
-            <a href="https://distributed-text-services.github.io/">https://distributed-text-services.github.io/</a>
+            <a href="http://w3id.org/dts">http://w3id.org/dts</a>
          </p>
          <p>
-            This website directly exposes DTS endpoints served by an instance of <a href="https://github.com/Capitains/Nautilus">Nautilus</a>.
+            The application allows you to quickly navigate through collections of documents.
+         </p>
          <ul>
             <li>The <a href="https://distributed-text-services.github.io/Collection-Endpoint.html">Collection Endpoint</a> is used to navigate the text collection contents</li>
             <li>The <a href="https://distributed-text-services.github.io/Navigation-Endpoint.html">Navigation Endpoint</a> is used to navigate within a single text document</li>
             <li>The <a href="https://distributed-text-services.github.io/Document-Endpoint.html">Document Endpoint</a> is used to retrieve complete or partial texts</li>
          </ul>
-         The following data sample is exposed through a <a href="http://cite-architecture.github.io/cts/">CTS</a> compliant implementation: <a href="https://github.com/Capitains/MyCapytain">MyCapytain</a>.
-         <p>
-         </p>
-
+         The following data sample is exposed through the <a href="http://cite-architecture.github.io/cts/">CTS</a> compliant implementation <a href="https://github.com/Capitains/MyCapytain">MyCapytain</a>
+         and served in the <a href="http://w3id.org/dts">DTS</a> response format by an instance of <a href="https://github.com/Capitains/Nautilus">Nautilus</a>.
          <div id="card" class="card" style="margin-top: 40px;"> </div>
       </div>
    </div>
@@ -27,24 +26,41 @@
 
 {% block scripts %}
 <script type="text/javascript">
+   let default_url = "{{ url_for('app_bp.collections') }}";
+
    function load_card(url) {
+
            let xmlhttp = new XMLHttpRequest();
            xmlhttp.onreadystatechange = function() {
                if (xmlhttp.readyState === XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
                    if (xmlhttp.status === 200) {
-                       const data = xmlhttp.responseText;
-                       document.getElementById("card").innerHTML = data;
 
+
+                       // load the card content
+                       document.getElementById("card").innerHTML = xmlhttp.responseText;
+                       document.getElementById("home").onclick = function() {
+                           load_card(default_url);
+                       };
+                       for (let e of document.getElementsByTagName("code")) {
+                           //e.innerText = e.innerText.replace(/'/g, '"');
+                           let s = JSON.parse(e.innerText);
+                           s = JSON.stringify(s, undefined, 2);
+                           e.innerText = s;
+
+                           hljs.highlightBlock(e);
+
+                       }
+
+                       // bind the api link
                        for (let e of document.getElementsByClassName("hidden-nav")) {
                           e.onclick = function() {
-                               console.log(e.getElementsByTagName("input")[0]);
-                               load_card(e.getElementsByTagName("input")[0].value);
+                            load_card(e.getElementsByTagName("input")[0].value);
                           };
                        }
 
-                       const asides = document.getElementsByTagName("aside");
-                       if (asides.length > 0) {
-                           document.getElementById("aside-col").appendChild(asides[0]);
+                       // move <aside> elements to aside-col
+                       for (let aside of document.getElementsByTagName("aside")) {
+                           document.getElementById("aside-col").appendChild(aside);
                        }
                    }
                }
@@ -56,8 +72,7 @@
    }
 
    document.addEventListener("DOMContentLoaded", function (event) {
-           let default_url = "{{ url_for('app_bp.collections') }}";
-           load_card(default_url);
+       load_card(default_url);
    });
 </script>
 {% endblock %}

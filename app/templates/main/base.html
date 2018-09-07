@@ -12,11 +12,13 @@
 
     <link rel="stylesheet" href="{{ url_for('app_bp.static', filename='css/html.css') }}">
     <link rel="stylesheet" href="{{ url_for('app_bp.static', filename='css/postprod.css') }}">
-    <link rel="stylesheet" href="{{ url_for('app_bp.static', filename='css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('app_bp.static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('app_bp.static', filename='css/xcode.css') }}">
+
 
     <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
+    <script type="text/javascript" src="{{ url_for('app_bp.static', filename='js/highlight.pack.js') }}"></script>
     {% block head_scripts %}
     {% endblock head_scripts %}
 </head>

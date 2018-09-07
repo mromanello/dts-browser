@@ -17,6 +17,9 @@ def create_app(config_name="dev"):
 
     config[config_name].init_app(app)
 
+    @app.template_filter('decode')
+    def decode(s):
+        return str(s)
 
     from app import routes
 

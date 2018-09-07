@@ -4,7 +4,6 @@
 }
 
 .api-link {
-    margin: 12px;
     border-bottom: none;
 }
 
@@ -33,3 +32,18 @@ cite.title {
 .container li {
     line-height: inherit;
 }
+
+.card-header {
+    background:  hsl(0, 0%, 96%)  !important;
+}
+.card-header-title {
+    align-items: initial;
+    padding: 0;
+    margin: 7px;
+}
+
+.hljs {
+    background: inherit !important;
+    white-space: pre-wrap !important;
+}
+

@@ -1,20 +1,58 @@
 
 <header class="card-header">
-   <p class="card-header-title">
-       {{ collection["@id"] }} - {{ collection["totalItems"] }} item(s)
-   </p>
-   <a class="api-link" href="{{ api_url }}">{{ api_url }}</a>
+   <div class="card-header-title">
+           <div id="home" class="button" style="margin-left: 12px; margin-right: 12px;"><i class="fas fa-home"></i></div>
+           <p style="margin: 7px">Collection <a id="api-link" class="api-link" style="margin-left: 12px;" href="{{ api_url }}">{{ api_url }}</a></p>
+   </div>
 </header>
 <div class="card-content">
    <div id="card-content" class="content">
       <div>
-         <table class="table is-striped is-hoverable">
-            <head>
+
+         <p class="is-size-5" style="font-weight: bold;">Metadata</p>
+         <table class="table is-narrow is-striped">
+            <thead>
+                <th>Attribute</th>
+                <th>Value</th>
+            </thead>
+            <tbody>
+                <tr><td>@Context</td><td><code class="json">{{collection["@context"]|tojson|decode}}</code></td></tr>
+                <tr><td>@id</td><td>{{collection["@id"]}}</td></tr>
+                <tr><td>@type</td><td>{{collection["@type"]}}</td></tr>
+                <tr><td>totalItems</td><td>{{collection["totalItems"]}}</td></tr>
+                <tr><td>title</td><td>{{collection["title"]}}</td></tr>
+                {% if "description" in collection %}
+                <tr><td>description</td><td><code class="json">{{collection["description"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+                {% if "dts:dublincore" in collection %}
+                <tr><td>dts:dublincore</td><td><code class="json">{{collection["dts:dublincore"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+                {% if "dts:extensions" in collection %}
+                <tr><td>dts:extensions</td><td><code class="json">{{collection["dts:extensions"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+                {% if "dts:references" in collection %}
+                <tr><td>dts:references</td><td><code class="json">{{collection["dts:references"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+                {% if "dts:passage" in collection %}
+                <tr><td>dts:passage</td><td><code class="json">{{collection["dts:passage"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+                {% if "dts:download" in collection %}
+                <tr><td>dts:download</td><td><code class="json">{{collection["dts:download"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+                {% if "dts:citeStructure" in collection %}
+                <tr><td>dts:citeStructure</td><td><code class="json">{{collection["@context"]|tojson|decode}}</code></td></tr>
+                {% endif %}
+            </tbody>
+         </table>
+
+         <p class="is-size-5" style="font-weight: bold;">Members - {{ collection["totalItems"] }} item(s) of type {{ collection["@type"] }}</p>
+         <table class="table is-striped is-narrow is-hoverable">
+            <thead>
                <th>Id</th>
                <th>Title</th>
                <th>Type</th>
                <th>Total items</th>
-            </head>
+            </thead>
             <body>
                {% for m in collection["member"] %}
                <tr class="hidden-nav">

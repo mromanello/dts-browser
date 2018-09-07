@@ -48,7 +48,6 @@ transform = ET.XSLT(xslt)
     ROUTES
 """
 
-
 @app_bp.route("/")
 def index():
     return render_template("main/index.html")
@@ -57,7 +56,8 @@ def index():
 @app_bp.route("/collections")
 def collections():
     api_url, collection = query_nautilus(request, "collections")
-    return render_template("main/collection.html", collection=json_loads(collection), api_url=api_url)
+    collection = json_loads(collection)
+    return render_template("main/collection.html", collection=collection, api_url=api_url)
 
 
 @app_bp.route("/navigation")
