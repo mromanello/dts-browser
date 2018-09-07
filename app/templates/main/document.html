@@ -1,10 +1,25 @@
+{% from 'main/navigation.html' import load_navigation %}
+
 <header class="card-header">
    <div class="card-header-title">
            <div id="home" class="button" style="margin-left: 12px; margin-right: 12px;"><i class="fas fa-home"></i></div>
-           <p style="margin: 7px">Document <a id="api-link" class="api-link" style="margin-left: 12px;" href="{{ api_url }}">{{ api_url }}</a></p>
+           <p style="margin: 7px">Document</p>
    </div>
 </header>
 <div class="card-content">
+
+   <p style="font-weight: bold;">
+       <span class="is-size-5" style="font-weight: bold;">Navigation API</span>
+       <a id="api-link" class="api-link" style="margin-left: 12px;" href="{{ navigation_api_url }}">{{ navigation_api_url }}</a>
+       <span style="font-weight: normal"> (raw response)</span>
+   </p>
+   <div id="navigation-card" style="margin-top: 20px;">{{ load_navigation(navigation) }}</div>
+
+   <p style="font-weight: bold; margin-top: 40px; margin-bottom: 10px">
+       <span class="is-size-5" style="font-weight: bold;">Document API</span>
+       <a id="api-link" class="api-link" style="margin-left: 12px;" href="{{ document_api_url }}">{{ document_api_url }}</a>
+       <span style="font-weight: normal"> (raw response)</span>
+   </p>
    <div id="card-content" class="content">
         <div class="columns">
             <div id="aside-col" class="column"></div>

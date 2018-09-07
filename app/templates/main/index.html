@@ -18,7 +18,8 @@
          </ul>
          The following data sample is exposed through the <a href="http://cite-architecture.github.io/cts/">CTS</a> compliant implementation <a href="https://github.com/Capitains/MyCapytain">MyCapytain</a>
          and served in the <a href="http://w3id.org/dts">DTS</a> response format by an instance of <a href="https://github.com/Capitains/Nautilus">Nautilus</a>.
-         <div id="card" class="card" style="margin-top: 40px;"> </div>
+
+         <div id="collection-card" class="card" style="margin-top: 40px;"></div>
       </div>
    </div>
 </section>
@@ -26,35 +27,34 @@
 
 {% block scripts %}
 <script type="text/javascript">
-   let default_url = "{{ url_for('app_bp.collections') }}";
 
-   function load_card(url) {
+   const default_collection_url = "{{ url_for('app_bp.collections') }}";
+
+   function load_card(card_id, url) {
 
            let xmlhttp = new XMLHttpRequest();
            xmlhttp.onreadystatechange = function() {
                if (xmlhttp.readyState === XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
                    if (xmlhttp.status === 200) {
 
-
                        // load the card content
-                       document.getElementById("card").innerHTML = xmlhttp.responseText;
+                       document.getElementById(card_id).innerHTML = xmlhttp.responseText;
                        document.getElementById("home").onclick = function() {
-                           load_card(default_url);
+                           load_card("collection-card", default_collection_url);
                        };
+
                        for (let e of document.getElementsByTagName("code")) {
                            //e.innerText = e.innerText.replace(/'/g, '"');
                            let s = JSON.parse(e.innerText);
                            s = JSON.stringify(s, undefined, 2);
                            e.innerText = s;
-
                            hljs.highlightBlock(e);
-
                        }
 
                        // bind the api link
                        for (let e of document.getElementsByClassName("hidden-nav")) {
                           e.onclick = function() {
-                            load_card(e.getElementsByTagName("input")[0].value);
+                            load_card("collection-card", e.getElementsByTagName("input")[0].value);
                           };
                        }
 
@@ -72,7 +72,7 @@
    }
 
    document.addEventListener("DOMContentLoaded", function (event) {
-       load_card(default_url);
+       load_card("collection-card", default_collection_url);
    });
 </script>
 {% endblock %}

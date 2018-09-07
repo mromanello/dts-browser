@@ -31,13 +31,14 @@ def query_endpoint(url, method='GET', headers_arg=None):
     return data
 
 
-def query_nautilus(request, endpoint):
+def query_nautilus(args, endpoint):
     base_url = current_app.config["NAUTILUS_URL"]
     endpoint_url = current_app.config["NAUTILUS_%s_ENDPOINT" % endpoint.upper()]
     params = ""
-    if len(request.args) > 0:
-        params = "?" + "&".join(["%s=%s" % (k, v) for k, v in request.args.items()])
+    if len(args) > 0:
+        params = "?" + "&".join(["%s=%s" % (k, v) for k, v in args.items()])
     url = base_url + endpoint_url + params
+    print(url)
     return url, query_endpoint(url)
 
 
@@ -55,22 +56,26 @@ def index():
 
 @app_bp.route("/collections")
 def collections():
-    api_url, collection = query_nautilus(request, "collections")
+    api_url, collection = query_nautilus(request.args, "collections")
     collection = json_loads(collection)
     return render_template("main/collection.html", collection=collection, api_url=api_url)
 
 
-@app_bp.route("/navigation")
-def navigation():
-    return render_template("main/navigation.html")
-
-
 @app_bp.route("/document")
 def document():
-    api_url, doc = query_nautilus(request, "document")
 
+    # document
+    document_api_url, doc = query_nautilus(request.args, "document")
     dom = ET.fromstring(doc)
     newdom = transform(dom)
     center_div = newdom.xpath("//*[name()='div' and @id='center']")[0]
     safe_dom = Markup(ET.tostring(center_div).decode('utf-8'))
-    return render_template("main/document.html", document=safe_dom, api_url=api_url)
+
+    # navigation
+    navigation_args = {"id": request.args["id"]}
+    navigation_api_url, navigation = query_nautilus(navigation_args, "navigation")
+    navigation = json_loads(navigation)
+
+    return render_template("main/document.html",
+                           navigation=navigation, document=safe_dom,
+                           navigation_api_url=navigation_api_url, document_api_url=document_api_url)
