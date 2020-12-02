@@ -28,7 +28,7 @@
 {% block scripts %}
 <script type="text/javascript">
 
-   const default_collection_url = "{{ url_for('app_bp.collections') }}";
+   const default_collection_url = "{{ url_for('app_bp.entrypoints') }}";
 
    function load_card(card_id, url) {
 
@@ -76,4 +76,3 @@
    });
 </script>
 {% endblock %}
-
