@@ -29,7 +29,7 @@ def query_endpoint(url, method="GET", headers_arg=None):
     if method == "GET":
         op = build_opener()
         op.addheaders = [(k, v) for k, v in headers.items()]
-        data = op.open(url, timeout=15).read()
+        data = op.open(url, timeout=30).read()
     else:
         raise NotImplementedError
 
@@ -104,8 +104,12 @@ def collections():
 def document():
 
     # document
-    document_api_url, doc = query_dts_api(request.args, "documents")
+    collection_api_url, coll = query_dts_api(request.args, "collections")
+    collection = json_loads(coll)
+    document_api_url = urljoin(request.args["baseurl"], collection["dts:passage"])
+    doc = query_endpoint(document_api_url)
     print(f"document_api_url {document_api_url}")
+
     dom = ET.fromstring(doc)
     newdom = transform(dom)
     center_div = newdom.xpath("//*[name()='div' and @id='center']")[0]
