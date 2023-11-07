@@ -4,7 +4,8 @@ import json
 import sys
 import lxml.etree as ET
 import pprint
-from flask import render_template, request, current_app, Markup
+from markupsafe import Markup
+from flask import render_template, request, current_app
 from urllib.request import build_opener
 from urllib.parse import urljoin
 

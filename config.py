@@ -12,9 +12,8 @@ class Config(object):
 
     APP_URL_PREFIX = ""
 
-    AGGREGATOR_URL = "https://dts-aggregator.herokuapp.com"
-    # AGGREGATOR_URL = "http://127.0.0.1:5000"
-    AGGREGATOR_COLLECTIONS_ENDPOINT = "/collections"
+    AGGREGATOR_URL = "http://127.0.0.1:5000"
+    AGGREGATOR_COLLECTIONS_ENDPOINT = "collections"
 
     @staticmethod
     def init_app(app):
