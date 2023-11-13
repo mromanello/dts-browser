@@ -12,7 +12,7 @@ class Config(object):
 
     APP_URL_PREFIX = ""
 
-    AGGREGATOR_URL = "http://127.0.0.1:5000"
+    AGGREGATOR_URL = os.environ.get("AGGREGATOR_URL") if 'AGGREGATOR_URL' in os.environ else "http://127.0.0.1:5000"
     AGGREGATOR_COLLECTIONS_ENDPOINT = "collections"
 
     @staticmethod
